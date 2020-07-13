@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Solicitud Servicio Social
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Solicitud Servicio Social</h2>
+        </br></br>
+        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_solicitud_servicio_social' %}', 'Registrar Solicitud Servicio Social')" value="Registrar Solicitud">
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container">
+    <div>
+        <table>
+            <thead>
+        	   <tr>
+                    <th>Carnet</th>
+                    <th>Entidad</th>
+                    <th>Horas Semana</th>
+                    <th>D&iacute;as Semana</th>
+                    <th>Modalidad</th>
+                    <th>Fecha Inicio</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+
+                    <th>Imprimir</th>
+        		</tr>
+            </thead>
+
+            {% if solicitudes_list %}
+            {% for sol in solicitudes_list %}
+
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.carnet_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.codigo_entidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.horas_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.dias_semana }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.modalidad }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ sol.fecha_inicio }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_solicitud_servicio_social' sol.pk %}', 'Modificar registro de {{ sol.carnet_estudiante }}')" class = "btn">Editar</a></td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_solicitud_servicio_social' sol.pk %}', 'Eliminar registro con {{ sol.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{%url 'proyeccionsocial:generar_F1' sol.pk %}" class = "btn">Imprimir F-1</a></td>
+        		</tr>
+            {% endfor %}
+            {% endif %}
+
+    	</table>
+    </div>
+    
+    </br>
+    <a href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}"><input class = "btn-buscar btn-busqueda"  type="button" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' %}' )" value="Regresar"></a>
+
+</div>
+
+    <div id = "popup"> 
+  
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}

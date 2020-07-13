@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+<title>{% block title %} Registrar Usuario {% endblock %}</title>
+
+<!-- CSS y Bootstrap -->
+<link rel = "stylesheet" href = "{% static 'css/bootstrap.min.css' %}">
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <strong class="card-title">Registro de Usuarios</strong>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="">
+                <a href="{% url 'usuario:listar_usuarios' %}" class="btn btn-danger">CANCELAR</a>
+                <buttton type="submit">REGISTRAR</buttton>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

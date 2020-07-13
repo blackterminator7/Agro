@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+{%block title%}
+Control Estudiante
+{%endblock%}
+{% block content %}
+
+  <header>
+    <div class="container">
+        <h2 align="center" class="form-titulo" style ="margin-left: 5px;">Control de Estudiante</h2>
+        </br></br>
+        <input class = "btn-buscar btn-busqueda"  type="button" href="#" onclick="return abrir_modal('{% url 'proyeccionsocial:crear_estudiante' %}', 'Registrar Estudiante')" value="Agregar">
+        </br></br></br>
+    </div>
+  </header>
+
+<div class="container">
+    <div>
+        <table>
+            <thead>
+        	   <tr>
+                    <th>Carnet</th>
+            		<th>Nombre</th>
+                    <th>Sexo</th>
+            	    <th>Telefono</th>
+            	    <th>Correo</th>
+            	    <th>Direccion</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                    <th>Agregar Estudios</th>
+        		</tr>
+            </thead>
+
+            {% if estudiante_list %}
+            {% for est in estudiante_list %}
+
+        		<tr class="etiqueta-tr">
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.carnet_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ est.nombre_estudiante}} {{ est.apellido_estudiante}}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.sexo_estudiante }}</td>
+            		<td class="th-borde width-th-xx" style = "text-align:center;">{{ est.telefono_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.correo_estudiante }}</td>
+                    <td class="th-borde width-th-xx" style = "text-align:center;">{{ est.direccion_estudiante }}</td>
+                    
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:editar_estudiante' est.pk %}', 'Modificar registro de {{ est.carnet_estudiante }}')" class = "btn">Editar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "#" onclick = "return abrir_modal('{% url 'proyeccionsocial:eliminar_estudiante' est.pk %}', 'Eliminar registro con {{ est.carnet_estudiante }}')" class = "btn">Eliminar</a></td>
+
+                    <td class="th-borde width-th-xx" style = "text-align:center;"><a class="a-btn" href = "{% url 'proyeccionsocial:consulta_estudio_universitario' %}" onclick = "return '{% url 'proyeccionsocial:consulta_estudio_universitario' %}' )" class = "btn">Agregar Estudio</a></td>
+        		</tr>
+            {% endfor %}
+            {% endif %}
+
+    	</table>
+    </div>
+</div>
+
+    <div id = "popup"> 
+  
+</div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var modal;
+        function abrir_modal(url, titulo)
+        {
+            modal = $('#popup').dialog({
+                title :titulo,
+                modal :true,
+                width :500,
+                resizable :false
+            }).dialog('open').load(url)
+        }
+    </script>
+
+{% endblock %}
